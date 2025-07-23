@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+
+</head>
+<body>
+    
+    <div class="mainbody">
+        <div class="maindiv">
+            <div class="mainTop">
+                <div class="leftHistory">
+                    <img src="history.png" style="height: 100%;width: 100%;object-fit: contain;">
+                </div>
+                <div class="rightUpdate js-update"></div>
+            </div>
+            <div class="mainDisplay"></div>
+            <div class="buttons">
+                <table>
+                    <tr>
+                        <td class="btnOperator" id="Ac" colspan="2">Clear</td>
+                        <td class="btnOperator" id="back">⌫</td>
+                        <td class="btnOperator" id="/">&divide;</td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="btnNumber" id="7">7</td>
+                        <td class="btnNumber" id="8">8</td>
+                        <td class="btnNumber" id="9">9</td>
+                        <td class="btnOperator" id="*">&times;</td>
+                    </tr>
+                    <tr>
+                        <td class="btnNumber" id="4">4</td>
+                        <td class="btnNumber" id="5">5</td>
+                        <td class="btnNumber" id="6">6</td>
+                        <td class="btnOperator" id="-">&#8722;</td>
+                    </tr>
+                    <tr>
+                        <td class="btnNumber" id="1">1</td>
+                        <td class="btnNumber" id="2">2</td>
+                        <td class="btnNumber" id="3">3</td>
+                        <td class="btnOperator" id="+">&#43;</td>
+                    </tr>
+                    <tr>
+                        <td class="btnOperator" id="0">0</td>
+                        <td class="btnOperator" id=".">.</td>
+                        <td class="btnOperator" id="equals" colspan="2" style="background-color: white;color: black;">=</td>
+                    </tr>
+                </table>
+            </div> 
+        </div>
+    </div>
+    
+    <script src="calculator.js"></script>
+    
+</body>
+</html>

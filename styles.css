@@ -1,0 +1,83 @@
+body{
+     background: linear-gradient(to bottom right, #ffffe6, #595a55);
+     font-family: sans-serif;
+}
+.mainbody{
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    place-items: center;
+}
+
+.maindiv{
+    background-color: black;
+    width: 300px;
+    height: 480px;
+    margin-top: 0px;
+    border-radius: 10px;
+}
+.mainTop{
+    border-radius: 10px;
+    height: 50px;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    
+}
+.leftHistory{
+    background-color: rgb(41, 39, 39);
+    border-top-left-radius: 10px;
+}
+.rightUpdate{
+    border: red;
+    color: white;
+    font-size: 20px;
+    line-height: 40px;
+    text-align: right;
+    padding-right: 10px;
+}
+.mainDisplay{
+    
+    background-color: rgb(28, 27, 27);
+    height: 70px;
+    color: white;
+    font-size: 35px;
+    text-align: right;
+    line-height: 60px;
+    padding-right: 10px;
+}
+.buttons{
+    
+    height: 350px;
+}
+.btnOperator{
+    background-color: rgb(102, 102, 102);
+    color: orange;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size:larger;
+    border-radius: 20px;
+    
+}
+.btnNumber{
+    background-color: rgb(68, 68, 68);
+    color: white;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size:larger;
+    border-radius: 20px;
+   
+}
+.buttons table{
+    padding: 5px;
+    width: 100%;
+    height: 100%;
+    border: none;
+    table-layout: fixed;
+    border-spacing: 7px;
+    border-collapse: separate;
+}
+.btnOperator:hover,.btnNumber:hover{
+    cursor: pointer;
+}
