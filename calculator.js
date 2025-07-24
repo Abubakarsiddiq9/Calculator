@@ -15,9 +15,12 @@ buttons.forEach((button)=>{
         updateshow.innerText='';
         resultShown=false;
     }else if(id==='back'){
-        currentValue= currentValue.slice(0,-1);
-        currentExpression=currentValue.slice(0,-1);
+        if (currentValue.length > 0) {
+        currentValue = currentValue.slice(0, -1);
         display.innerText = currentExpression + currentValue;
+        updateshow.innerText = currentExpression + currentValue;
+    }
+
     
     }else if (id === 'equals') {
     try {
@@ -69,7 +72,9 @@ buttons.forEach((button)=>{
             currentExpression = '';
             resultShown = false;
         }
-    } else {
+        
+    }
+    else {
         // If currentValue is empty, user is just replacing the last operator
         let lastChar = currentExpression.slice(-1);
         if (['+', '-', '*', '/'].includes(lastChar)) {
