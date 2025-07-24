@@ -26,6 +26,10 @@ buttons.forEach((button)=>{
     try {
         let fullExpression = currentExpression + currentValue;
         let result = math.evaluate(fullExpression);
+        // Limit result to 8 decimal places if it's a float
+        if (typeof result === 'number' && !Number.isInteger(result)) {
+            result = parseFloat(result.toFixed(8)); // You can adjust toFixed(6), (7), etc.
+        }
         currentValue = String(result);
         currentExpression = '';
         display.innerText = currentValue;
@@ -85,11 +89,16 @@ buttons.forEach((button)=>{
     }
 }
         
-    else{
-    currentValue+=id;
-    
-    display.innerText=currentExpression+currentValue;
-    updateshow.innerText=currentExpression+currentValue;
+    else {
+    if (currentValue.length < 10) {
+            currentValue += id;
+            display.innerText = currentValue;
+            updateshow.innerText = currentExpression + currentValue;
+            display.scrollLeft = display.scrollWidth;
+            updateshow.scrollLeft = updateshow.scrollWidth;
+        }
+
     }
+
 });
 }); 

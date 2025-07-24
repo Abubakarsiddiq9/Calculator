@@ -33,8 +33,9 @@ body{
     font-size: 20px;
     line-height: 40px;
     text-align: right;
-    padding-right: 10px;
+    padding-right: 10px; 
 }
+
 .mainDisplay{
     
     background-color: rgb(28, 27, 27);
@@ -44,7 +45,15 @@ body{
     text-align: right;
     line-height: 60px;
     padding-right: 10px;
+
 }
+.mainDisplay {
+    font-size: clamp(20px, 5vw, 35px);
+}
+.rightUpdate {
+    font-size: clamp(12px, 4vw, 20px);
+}
+
 .buttons{
     
     height: 350px;
