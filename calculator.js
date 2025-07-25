@@ -1,9 +1,13 @@
 const display=document.querySelector('.mainDisplay');
 const buttons= document.querySelectorAll('.btnOperator, .btnNumber');
 const updateshow=document.querySelector('.js-update');
+const historyBtn=document.querySelector('.historyBtn');
+const buttonsDisplay=document.querySelector('.buttons')
+
 let resultShown=false;
 let currentExpression='';
 let currentValue='';
+let resultHistory=[];
 
 buttons.forEach((button)=>{
     button.addEventListener('click',()=>{
@@ -26,14 +30,18 @@ buttons.forEach((button)=>{
     try {
         let fullExpression = currentExpression + currentValue;
         let result = math.evaluate(fullExpression);
+        
         // Limit result to 8 decimal places if it's a float
         if (typeof result === 'number' && !Number.isInteger(result)) {
-            result = parseFloat(result.toFixed(8)); // You can adjust toFixed(6), (7), etc.
+            result = parseFloat(result.toFixed(8)); 
         }
         currentValue = String(result);
         currentExpression = '';
         display.innerText = currentValue;
         updateshow.innerText = fullExpression + '=';
+        resultHistory.push(fullExpression+'='+currentValue);
+        
+        
         resultShown = true;
         }catch (err) {
         display.innerText = 'Error';
@@ -101,4 +109,52 @@ buttons.forEach((button)=>{
     }
 
 });
-}); 
+});
+let historyDisplay = null;
+let historyShown = false;
+
+historyBtn.addEventListener('click', () => {
+  if (!historyDisplay) {
+    // Create history container
+    historyDisplay = document.createElement('div');
+    historyDisplay.classList.add('historydis');
+
+    // Create history content wrapper
+    const historyContent = document.createElement('div');
+    historyContent.classList.add('history-content');
+
+    // Create delete button
+    const delBtn = document.createElement('button');
+    delBtn.innerText = '🗑️';
+    delBtn.classList.add('del-btn');
+
+    // Delete logic
+    delBtn.addEventListener('click', () => {
+      resultHistory.length = 0;
+      historyContent.innerHTML = ''; // only clear <p>s
+    });
+
+    // Assemble
+    historyDisplay.appendChild(historyContent);
+    historyDisplay.appendChild(delBtn);
+    buttonsDisplay.appendChild(historyDisplay);
+  }
+
+  // Update content
+  const historyContent = historyDisplay.querySelector('.history-content');
+  historyContent.innerHTML = ''; // Clear only <p>s
+
+  resultHistory.forEach(item => {
+    const p = document.createElement('p');
+    p.innerText = item;
+    historyContent.appendChild(p);
+  });
+
+  historyShown = !historyShown;
+
+  if (historyShown) {
+    historyDisplay.classList.add('show');
+  } else {
+    historyDisplay.classList.remove('show');
+  }
+});

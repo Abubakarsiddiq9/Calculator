@@ -49,14 +49,69 @@ body{
 }
 .mainDisplay {
     font-size: clamp(20px, 5vw, 35px);
+    
+    
 }
+
+.historydis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  color: blue;
+  background-color: yellow;
+  width: 300px;
+  height: 350px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  border-radius: 10px;
+  text-align: right;
+  padding: 10px;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.historydis.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.history-content {
+  overflow-y: auto;
+  max-height: 100%;
+  margin-bottom: 10px;
+  flex-grow: 1;
+}
+
+.del-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: center;
+}
+.historydis p{
+    
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
 .rightUpdate {
     font-size: clamp(12px, 4vw, 20px);
 }
 
 .buttons{
-    
+    position: relative;
     height: 350px;
+    overflow: hidden;
 }
 .btnOperator{
     background-color: rgb(102, 102, 102);
