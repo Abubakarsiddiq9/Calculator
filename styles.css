@@ -1,5 +1,5 @@
 body{
-     background: linear-gradient(to bottom right, #ffffe6, #595a55);
+     background: linear-gradient(to bottom right, #5a5862, #FAF4E4);
      font-family: sans-serif;
 }
 .mainbody{
@@ -15,6 +15,9 @@ body{
     height: 480px;
     margin-top: 0px;
     border-radius: 10px;
+    box-shadow: 5px 5px 10px rgb(0, 0, 0);
+    border: solid 5px rgb(199, 195, 195);
+
 }
 .mainTop{
     border-radius: 10px;
@@ -28,7 +31,8 @@ body{
     border-top-left-radius: 10px;
 }
 .rightUpdate{
-    border: red;
+    border: solid 2px rgb(94, 93, 93);
+    
     color: white;
     font-size: 20px;
     line-height: 40px;
@@ -37,7 +41,8 @@ body{
 }
 
 .mainDisplay{
-    
+    border: 1px solid rgb(82, 80, 80);
+    border-bottom: 3px solid rgb(82, 80, 80);
     background-color: rgb(28, 27, 27);
     height: 70px;
     color: white;
@@ -52,16 +57,24 @@ body{
     
     
 }
+.historyBtn{
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.historyBtn:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
 
 .historydis {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  color: blue;
-  background-color: yellow;
+  color: black;
+  background-color: gray;
   width: 300px;
   height: 350px;
+  font-size: 20px;
   position: absolute;
   top: 0;
   left: 0;
@@ -83,6 +96,7 @@ body{
 }
 
 .history-content {
+  scrollbar-width: thin;
   overflow-y: auto;
   max-height: 100%;
   margin-bottom: 10px;
@@ -99,9 +113,10 @@ body{
   align-self: center;
 }
 .historydis p{
-    
-    padding-bottom: 5px;
-    margin-bottom: 10px;
+    border-bottom: 2px solid white;
+    padding-bottom: 15px;
+    margin-right: 10px;
+
 }
 
 .rightUpdate {
@@ -114,14 +129,15 @@ body{
     overflow: hidden;
 }
 .btnOperator{
-    background-color: rgb(102, 102, 102);
-    color: orange;
+    background-color: rgb(185, 181, 181);
+    color: rgb(253, 0, 0);
     text-align: center;
     vertical-align: middle;
     font-weight: bold;
     font-size:larger;
     border-radius: 20px;
-    
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
 }
 .btnNumber{
     background-color: rgb(68, 68, 68);
@@ -131,7 +147,20 @@ body{
     font-weight: bold;
     font-size:larger;
     border-radius: 20px;
-   
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+.btnOperator:hover,
+.btnNumber:hover {
+  filter: brightness(1.2);
+  transform: scale(1.05);
+  cursor: pointer;
+  transition: transform 0.1s ease, filter 0.2s ease;
+}
+.btnOperator:active,
+.btnNumber:active {
+  transform: scale(0.95);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 .buttons table{
     padding: 5px;

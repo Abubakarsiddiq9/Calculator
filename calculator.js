@@ -27,6 +27,11 @@ buttons.forEach((button)=>{
 
     
     }else if (id === 'equals') {
+        if(currentExpression===''){
+            return;
+        }
+        
+       
     try {
         let fullExpression = currentExpression + currentValue;
         let result = math.evaluate(fullExpression);
@@ -44,14 +49,12 @@ buttons.forEach((button)=>{
         
         resultShown = true;
         }catch (err) {
-        display.innerText = 'Error';
-        updateshow.innerText = '';
-        currentValue = '';
-        currentExpression = '';
+        display.innerText = currentExpression;
+        
         resultShown = false;
         }
     }
-
+    
     else if(resultShown&& !['+','-','*','/'].includes(id)){
         currentExpression='';
         currentValue=id;
