@@ -6,118 +6,113 @@ const buttonsDisplay=document.querySelector('.buttons')
 
 let resultShown=false;
 let currentExpression='';
+let currentValue='';
 let resultHistory=[];
-
-const operators = ['+', '-', '*', '/'];
-
-function updateExpressionDisplay() {
-    updateshow.innerText = currentExpression;
-    updateshow.scrollLeft = updateshow.scrollWidth;
-}
-
-function clearCalculator() {
-    currentExpression = '';
-    display.innerText = '';
-    updateshow.innerText = '';
-    resultShown = false;
-}
-
-function removeLastInput() {
-    currentExpression = currentExpression.slice(0, -1);
-    updateExpressionDisplay();
-}
-
-function formatResult(result) {
-    if (typeof result === 'number' && !Number.isInteger(result)) {
-        return String(parseFloat(result.toFixed(8)));
-    }
-
-    return String(result);
-}
-
-function calculateResult() {
-    if (currentExpression === '' || operators.includes(currentExpression.slice(-1))) {
-        return;
-    }
-
-    try {
-        const result = formatResult(math.evaluate(currentExpression));
-        display.innerText = result;
-        resultHistory.push(currentExpression + '=' + result);
-        resultShown = true;
-    } catch (err) {
-        display.innerText = 'Error';
-        resultShown = false;
-    }
-}
-
-function addInput(id) {
-    if (id === 'Ac') {
-        clearCalculator();
-        return;
-    }
-
-    if (id === 'back') {
-        if (resultShown) {
-            display.innerText = '';
-            resultShown = false;
-        }
-        removeLastInput();
-        return;
-    }
-
-    if (id === 'equals') {
-        calculateResult();
-        return;
-    }
-
-    const isOperator = operators.includes(id);
-
-    if (resultShown) {
-        currentExpression = isOperator ? display.innerText + id : id;
-        display.innerText = '';
-        resultShown = false;
-        updateExpressionDisplay();
-        return;
-    }
-
-    const lastChar = currentExpression.slice(-1);
-
-    if (isOperator && currentExpression === '') {
-        return;
-    }
-
-    if (isOperator && operators.includes(lastChar)) {
-        currentExpression = currentExpression.slice(0, -1) + id;
-    } else {
-        currentExpression += id;
-    }
-
-    updateExpressionDisplay();
-}
 
 buttons.forEach((button)=>{
     button.addEventListener('click',()=>{
-        addInput(button.id);
-    });
-});
-
-document.addEventListener('keydown', (event) => {
-    if (/^[0-9.]$/.test(event.key) || operators.includes(event.key)) {
-        event.preventDefault();
-        addInput(event.key);
-    } else if (event.key === 'Enter') {
-        event.preventDefault();
-        addInput('equals');
-    } else if (event.key === 'Backspace') {
-        event.preventDefault();
-        addInput('back');
-    } else if (event.key === 'Escape') {
-        event.preventDefault();
-        addInput('Ac');
+    let id=button.id;
+    if(id==='Ac'){
+        currentExpression='';
+        currentValue='';
+        display.innerText='';
+        updateshow.innerText='';
+        resultShown=false;
+    }else if(id==='back'){
+        if (currentValue.length > 0) {
+        currentValue = currentValue.slice(0, -1);
+        display.innerText = currentExpression + currentValue;
+        updateshow.innerText = currentExpression + currentValue;
     }
-});
 
+    
+    }else if (id === 'equals') {
+        if(currentExpression===''){
+            return;
+        }
+        
+       
+    try {
+        let fullExpression = currentExpression + currentValue;
+        let result = math.evaluate(fullExpression);
+        
+        // Limit result to 8 decimal places if it's a float
+        if (typeof result === 'number' && !Number.isInteger(result)) {
+            result = parseFloat(result.toFixed(8)); 
+        }
+        currentValue = String(result);
+        currentExpression = '';
+        display.innerText = currentValue;
+        updateshow.innerText = fullExpression + '=';
+        resultHistory.push(fullExpression+'='+currentValue);
+        
+        
+        resultShown = true;
+        }catch (err) {
+        display.innerText = currentExpression;
+        
+        resultShown = false;
+        }
+    }
+    
+    else if(resultShown&& !['+','-','*','/'].includes(id)){
+        currentExpression='';
+        currentValue=id;
+        display.innerText=currentValue;
+        updateshow.innerText=currentValue;
+        resultShown=false;
+        
+    }
+    else if(resultShown&&['+','-','*','/'].includes(id)){
+        currentExpression=currentValue+id;
+        currentValue='';
+        updateshow.innerText = currentExpression;
+        display.innerText=currentExpression;
+        resultShown=false;
+        
+    }else if (!resultShown && ['+', '-', '*', '/'].includes(id)) {
+    if (currentValue !== '') {
+        // If currentValue is not empty, append to expression and evaluate
+        currentExpression += currentValue;
+        try {
+            let result = math.evaluate(currentExpression);
+            currentExpression = result + id;
+            currentValue = '';
+            display.innerText = currentExpression;
+            updateshow.innerText = currentExpression;
+        } catch (err) {
+            display.innerText = 'Error';
+            updateshow.innerText = '';
+            currentValue = '';
+            currentExpression = '';
+            resultShown = false;
+        }
+        
+    }
+    else {
+        // If currentValue is empty, user is just replacing the last operator
+        let lastChar = currentExpression.slice(-1);
+        if (['+', '-', '*', '/'].includes(lastChar)) {
+            currentExpression = currentExpression.slice(0, -1) + id;
+            display.innerText = currentExpression;
+            updateshow.innerText = currentExpression;
+        }
+    }
+}
+        
+    else {
+    if (currentValue.length < 10) {
+            currentValue += id;
+            display.innerText = currentValue;
+            updateshow.innerText = currentExpression + currentValue;
+            display.scrollLeft = display.scrollWidth;
+            updateshow.scrollLeft = updateshow.scrollWidth;
+        }
+
+    }
+
+});
+});
 let historyDisplay = null;
 let historyShown = false;
 
