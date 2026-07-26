@@ -116,48 +116,72 @@ buttons.forEach((button)=>{
 let historyDisplay = null;
 let historyShown = false;
 
-historyBtn.addEventListener('click', () => {
-  if (!historyDisplay) {
-    // Create history container
-    historyDisplay = document.createElement('div');
-    historyDisplay.classList.add('historydis');
+function updateHistoryDisplay() {
+  if (!historyDisplay) return;
 
-    // Create history content wrapper
-    const historyContent = document.createElement('div');
-    historyContent.classList.add('history-content');
-
-    // Create delete button
-    const delBtn = document.createElement('button');
-    delBtn.innerText = '🗑️';
-    delBtn.classList.add('del-btn');
-
-    // Delete logic
-    delBtn.addEventListener('click', () => {
-      resultHistory.length = 0;
-      historyContent.innerHTML = ''; // only clear <p>s
-    });
-
-    // Assemble
-    historyDisplay.appendChild(historyContent);
-    historyDisplay.appendChild(delBtn);
-    buttonsDisplay.appendChild(historyDisplay);
-  }
-
-  // Update content
   const historyContent = historyDisplay.querySelector('.history-content');
-  historyContent.innerHTML = ''; // Clear only <p>s
+  historyContent.innerHTML = '';
 
   resultHistory.forEach(item => {
     const p = document.createElement('p');
     p.innerText = item;
     historyContent.appendChild(p);
   });
+}
 
-  historyShown = !historyShown;
+function showHistory(show) {
+  if (!historyDisplay) return;
 
-  if (historyShown) {
-    historyDisplay.classList.add('show');
-  } else {
-    historyDisplay.classList.remove('show');
+  historyShown = show;
+  historyDisplay.classList.toggle('show', show);
+}
+
+function createHistoryPanel() {
+  if (historyDisplay) return historyDisplay;
+
+  historyDisplay = document.createElement('div');
+  historyDisplay.classList.add('historydis');
+
+  const historyContent = document.createElement('div');
+  historyContent.classList.add('history-content');
+
+  const delBtn = document.createElement('button');
+  delBtn.innerText = '🗑️';
+  delBtn.classList.add('del-btn');
+
+  delBtn.addEventListener('click', (event) => {
+    event.stopPropagation();
+    resultHistory.length = 0;
+    historyContent.innerHTML = '';
+  });
+
+  historyDisplay.appendChild(historyContent);
+  historyDisplay.appendChild(delBtn);
+  buttonsDisplay.appendChild(historyDisplay);
+
+  return historyDisplay;
+}
+
+historyBtn.addEventListener('click', (event) => {
+  event.stopPropagation();
+
+  createHistoryPanel();
+  updateHistoryDisplay();
+
+  showHistory(!historyShown);
+});
+
+document.addEventListener('click', (event) => {
+  const clickedInsideHistory = event.target.closest('.historydis');
+  const clickedHistoryButton = event.target.closest('.historyBtn');
+
+  if (!clickedInsideHistory && !clickedHistoryButton && historyShown) {
+    showHistory(false);
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && historyShown) {
+    showHistory(false);
   }
 });
